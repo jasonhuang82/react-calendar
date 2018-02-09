@@ -1,0 +1,140 @@
+// -------------------------------------
+// Susy Import
+// -------------------------------------
+//@import "susy";
+// -------------------------------------
+// Core Mixins
+// -------------------------------------
+@import "../core/core/mixins";
+// -------------------------------------
+// Variables Import
+// -------------------------------------
+// 載入全域變數
+@import "../core/core/variables";
+// -------------------------------------
+// Components / Modules Setting
+// -------------------------------------
+// 請輸入您的ClassName
+$classname: 'reactCalendar';
+// -------------------------------------
+// 您的CSS Code
+// -------------------------------------
+//以下範例可以刪除，改為您自已的CSS Code
+.#{$classname} {
+	// style on phone device
+	
+	$theme_red: #e10500;
+	$theme_light_red: #ff8b88;
+	$theme_black: #999;
+	@mixin smSize(){
+		@media screen and (min-width: $screen-tablet) {
+			@content;
+		}
+	}
+	@mixin mdSize(){
+		@media screen and (min-width: $screen-desktop) {
+			@content;
+		}
+	}
+	@mixin lgSize(){
+		@media screen and (min-width: $screen-lg-desktop) {
+			@content;
+		}
+	}
+	// ====== calendarMobile ======
+	.calendarMobile{
+		font-weight: normal;		
+		ul{
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+		.holiday {
+			color: $theme_red;
+		}
+
+		ul.weeksInfos {
+			display: flex;
+			flex: 100%;
+			li {
+				flex: 1;
+				padding: 10px 0px;
+				padding-bottom: 5px;
+				text-align: center;
+			}
+		}
+	}
+	//========  calendarMobileHeader ========
+	.calendarMobileHeader{
+		display: flex;
+		flex-wrap: wrap;
+		> div{
+			flex: 100%;
+		}
+		//========== dayInfos ==========
+		.dayInfos{
+			display: flex;
+		}
+		.dateLabel{
+			display: flex;
+			flex-direction: column;
+			flex: 0 0 115px;
+			padding: 0 5px;
+			.dateLabelTitle{
+				color: $theme_black;
+			}
+		}
+		.dateLabelContent{
+			flex-grow: 1;
+			padding: 7px 0px;
+			&.active{
+				border-bottom: 3px solid red;
+			}
+		}
+		.dayInfosDash{
+			margin-top: 20px;
+			align-self: center;
+		}
+		.dayInfoNightCountLabel{
+			align-self: flex-end;
+			margin-bottom: 9px;
+		}
+	}
+	// =====   calendarMobileBody  ======
+	.calendarMobileBodyContainer{
+		margin-bottom: 30px;
+	}
+	.calendarMobileBodyTitle {
+		padding: 10px 0px;
+		text-align: center;
+	}
+	// ===== calendarMobileBodyTable ====
+	ul.calendarMobileBodyTable{
+		display: flex;
+		flex-wrap: wrap;
+		li{
+			width: calc(100% / 7);
+			padding: 5px;
+			text-align: center;
+			&.active{
+				background-color: $theme_red;
+				color: #fff;
+			}
+			&.isStart,&.isEnd,&.isBetween{
+				color: #fff;
+			}
+			&.isStart,&.isEnd{
+				background-color: $theme_red;
+
+			}
+			&.isBetween {
+				background-color: $theme_light_red;
+			}
+
+			&.isDisable{
+				opacity: 0.4;
+			}
+		}
+	
+	}
+}
