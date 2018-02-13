@@ -8,7 +8,4 @@ import 'babel-polyfill';
 import ReactCalendar from './index.js';
 
 
-ReactDOM.render(
-	<ReactCalendar />,
-	document.getElementById('root')
-);
+ReactDOM.render(<ReactCalendar />, document.getElementById('root'));

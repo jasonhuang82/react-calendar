@@ -14,7 +14,7 @@ export default class DataLoader {
     static setMoment () {
         moment.locale('zh-cn');
         console.log('moment is run : ', moment.locale());
-        // console.log(DataLoader.getDayFromDateTime('2018/02/10'));
+        // console.log(DataLoader.isHoliday('2018/02/10'));
         // DataLoader.getMonthFirstDay('2018/04/10');
         // console.log(moment('2014/01/01').isValid()); 驗證日期是否為正確
         // console.log(moment(預放入日期).day());
@@ -49,6 +49,7 @@ export default class DataLoader {
                 diffMonths = DataLoader.countDiffMonth(minMon, maxMon) + 1;
             }
 
+            // 產出所有需要印出的日曆標頭，並同時決定要印幾個
             for (let startMon = parseInt(moment(minMon).month()); startMon <= diffMonths; startMon++) {
                 // console.log(moment(minMon).year() + '/' + DataLoader.autoFillZero(startMon) );
                 let monthStr = new Date(moment(minMon).year(), DataLoader.autoFillZero(startMon)).toISOString();
@@ -56,7 +57,7 @@ export default class DataLoader {
                 // console.log(`${startMon}月:`, moment(monthStr).format('YYYY/MM'));
                 totalDateArr.push(dateStr);
             }
-            console.log('totalDateArr', totalDateArr);
+            console.log('總共年月數', totalDateArr);
             return totalDateArr;
         }
     }
@@ -67,7 +68,7 @@ export default class DataLoader {
         if (isValid && dayCount === 1) {
             let firstDay = DataLoader.getMonthFirstDay(date);
             let marginGap = ((100 / 7) * firstDay) + '%';
-            console.log('margin-left 推了 : ' + marginGap);
+            // console.log('margin-left 推了 : ' + marginGap);
 
             return {
                 'marginLeft': marginGap
@@ -80,16 +81,15 @@ export default class DataLoader {
         let isValid = DataLoader.isValidDate(minMon) && DataLoader.isValidDate(maxMon);
         if (isValid) {
             let totalDateArr = [];
-            let allDateYearMonth = DataLoader.getDateDiffArr(minMon, maxMon);
-
+            let allDateYearMonth = DataLoader.getDateDiffArr(minMon, maxMon); // 產出月曆標頭並決定要印幾個月曆
             allDateYearMonth.map((items, index) => {
                 // 取得結束 = > 開始 相差月數
-                let nowMonthObj = { // 純當月的年月物件
+                let nowMonthObj = { // 純當月的表頭&&所有日期物件
                     dateTitle: items,
                     dateDayList: []
                 };
                 let nowMonthArr = []; // 純單月份所有的日期
-                let renderDays = `${items}/01`;
+                let renderDays = `${items}/01`; // 為了用moment驗證日期需先轉換成 YYYY/MM/DD格式
                 let isValid = DataLoader.isValidDate(renderDays);
                 if (isValid) {
                     // 取年與月讓迴圈生呈每日日期
@@ -98,13 +98,12 @@ export default class DataLoader {
                     renderDays = DataLoader.getDaysInMonth(renderDays);
                     // 生成整包當月天數物件
                     for (let dayCount = 1; dayCount <= renderDays; dayCount++) {
-                        let dayCountClone = DataLoader.autoFillZero(dayCount.toString());
-
-                        // console.log(yearAndMonthStr + '/' + dayCountClone);
-                        let dateClone = yearAndMonthStr + '/' + dayCountClone;
-
+                        let dayCountClone = DataLoader.autoFillZero(dayCount.toString()); // 將loop 計算出日期數
+                        let dateClone = yearAndMonthStr + '/' + dayCountClone; // 組成 YYYY/MM/DD格式
                         // 取得今日日期並格式化不然isSame會格式錯誤永遠都false
-                        let formatTodayObj = moment(moment().format('YYYY/MM/DD')); 
+                        let formatTodayObj = moment(moment(minMon).format('YYYY/MM/DD'));
+                        // 如果loop出的日期符合今日就是 isToday
+                        let isToday = formatTodayObj.isSame(dateClone);
                         nowMonthArr.push(
                             {
                                 day: dayCount,
@@ -112,8 +111,8 @@ export default class DataLoader {
                                 isStart: false,
                                 isEnd: false,
                                 isDisable: false,
-                                isHoliday: DataLoader.getDayFromDateTime(dateClone),
-                                isToday: formatTodayObj.isSame(dateClone),
+                                isHoliday: DataLoader.isHoliday(dateClone),
+                                isToday: isToday,
                                 isBetween: false
                             }
                         );
@@ -153,6 +152,7 @@ export default class DataLoader {
         if (isValid) {
             let momentObj = moment(date);
             let dayInMonthCount = momentObj.daysInMonth();
+            // debug Mode
             console.log(`${momentObj.format('YYYY/MM/DD')} 當月天數 = ${dayInMonthCount}`);
             return dayInMonthCount;
         }
@@ -178,13 +178,14 @@ export default class DataLoader {
             let day = moment(date);
             let dayStr = day.startOf('month').format('YYYY-MM-DD');
             dayStr = moment(dayStr);
+            // debug mode
             console.log(`${day.format('YYYY/MM/DD')} 當月第一天為星期 ${dayStr.day()}`);
             return dayStr.day();
         }
     }
 
     // 確定日期是否為假日
-    static getDayFromDateTime (date) {
+    static isHoliday (date) {
         let isValid = DataLoader.isValidDate(date);
         if (isValid) {
             let day = moment(date);

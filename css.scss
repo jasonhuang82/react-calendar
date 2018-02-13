@@ -78,7 +78,7 @@ $classname: 'reactCalendar';
 		.dateLabel{
 			display: flex;
 			flex-direction: column;
-			flex: 0 0 115px;
+			width: 40%;
 			padding: 0 5px;
 			.dateLabelTitle{
 				color: $theme_black;
@@ -86,7 +86,10 @@ $classname: 'reactCalendar';
 		}
 		.dateLabelContent{
 			flex-grow: 1;
+			height: 40px;
+			border-bottom: 1px solid #e3e3e3;
 			padding: 7px 0px;
+			font-size: 16px;
 			&.active{
 				border-bottom: 3px solid red;
 			}
@@ -96,8 +99,10 @@ $classname: 'reactCalendar';
 			align-self: center;
 		}
 		.dayInfoNightCountLabel{
+			width: 20%;
 			align-self: flex-end;
 			margin-bottom: 9px;
+			padding-left: 30px;
 		}
 	}
 	// =====   calendarMobileBody  ======
@@ -116,6 +121,7 @@ $classname: 'reactCalendar';
 			width: calc(100% / 7);
 			padding: 5px;
 			text-align: center;
+			cursor: pointer;
 			&.active{
 				background-color: $theme_red;
 				color: #fff;
