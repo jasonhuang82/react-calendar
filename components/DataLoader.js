@@ -13,7 +13,8 @@ export default class DataLoader {
     // 設定moment初始化
     static setMoment () {
         moment.locale('zh-cn');
-        console.log('moment is run : ', moment.locale());
+        // debug mode
+        // console.log('moment is run : ', moment.locale());
         // console.log(DataLoader.isHoliday('2018/02/10'));
         // DataLoader.getMonthFirstDay('2018/04/10');
         // console.log(moment('2014/01/01').isValid()); 驗證日期是否為正確
@@ -54,10 +55,12 @@ export default class DataLoader {
                 // console.log(moment(minMon).year() + '/' + DataLoader.autoFillZero(startMon) );
                 let monthStr = new Date(moment(minMon).year(), DataLoader.autoFillZero(startMon)).toISOString();
                 let dateStr = moment(monthStr).format('YYYY/MM');
+                // debug mode
                 // console.log(`${startMon}月:`, moment(monthStr).format('YYYY/MM'));
                 totalDateArr.push(dateStr);
             }
-            console.log('總共年月數', totalDateArr);
+            // debug mode
+            // console.log('總共年月數', totalDateArr);
             return totalDateArr;
         }
     }
@@ -68,6 +71,7 @@ export default class DataLoader {
         if (isValid && dayCount === 1) {
             let firstDay = DataLoader.getMonthFirstDay(date);
             let marginGap = ((100 / 7) * firstDay) + '%';
+            // debug mode
             // console.log('margin-left 推了 : ' + marginGap);
 
             return {
@@ -141,7 +145,8 @@ export default class DataLoader {
             let minDate = moment(minMon);
             let maxDate = moment(maxMon);
             let diffMonth = maxDate.diff(minDate, 'month');
-            console.log(`${minDate.format('YYYY/MM/DD')} 到 ${maxDate.format('YYYY/MM/DD')} 相差 ${diffMonth} 月`);
+            // debug mode
+            // console.log(`${minDate.format('YYYY/MM/DD')} 到 ${maxDate.format('YYYY/MM/DD')} 相差 ${diffMonth} 月`);
             return diffMonth;
         }
     }
@@ -153,7 +158,7 @@ export default class DataLoader {
             let momentObj = moment(date);
             let dayInMonthCount = momentObj.daysInMonth();
             // debug Mode
-            console.log(`${momentObj.format('YYYY/MM/DD')} 當月天數 = ${dayInMonthCount}`);
+            // console.log(`${momentObj.format('YYYY/MM/DD')} 當月天數 = ${dayInMonthCount}`);
             return dayInMonthCount;
         }
     }
@@ -179,7 +184,7 @@ export default class DataLoader {
             let dayStr = day.startOf('month').format('YYYY-MM-DD');
             dayStr = moment(dayStr);
             // debug mode
-            console.log(`${day.format('YYYY/MM/DD')} 當月第一天為星期 ${dayStr.day()}`);
+            // console.log(`${day.format('YYYY/MM/DD')} 當月第一天為星期 ${dayStr.day()}`);
             return dayStr.day();
         }
     }
