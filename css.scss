@@ -102,7 +102,10 @@ $classname: 'reactCalendar';
 			width: 20%;
 			align-self: flex-end;
 			margin-bottom: 9px;
-			padding-left: 30px;
+			@include smSize(){
+				padding-left: 30px;
+			};
+			
 		}
 	}
 	// =====   calendarMobileBody  ======

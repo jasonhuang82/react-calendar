@@ -68,7 +68,7 @@ class Module extends Component {
     }
 
     whenClickDate = () => {
-        console.log('Daddy is home!!');
+        console.log('我是從Module來的喔');
     }
 
     render () {
