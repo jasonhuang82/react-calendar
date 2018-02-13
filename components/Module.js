@@ -8,8 +8,6 @@ import moment from 'moment';
 
 import CalendarMobile from './CalendarMobile';
 
-
-
 class Module extends Component {
     static defaultProps = {
         prop: 'string'
@@ -60,13 +58,7 @@ class Module extends Component {
     css 預設裡面要有東西不然css module 會錯
     */
 
-    getResultDateDafault (res) {
-        console.log('Dafault', res);
-    }
-    getResultDateIsSelect (res) {
-        console.log('IsSelect', res);
-    }
-
+    // callBack
     whenClickDate = () => {
         console.log('我是從Module來的喔');
     }
@@ -78,7 +70,7 @@ class Module extends Component {
                     <div className="reactCalendar">
                         <h2>Style: isSelect</h2>
                         <CalendarMobile startDate={moment().format('YYYY/MM/DD')}
-                            endDate="2019/06/08"
+                            endDate="2018/06/08"
                             getResultDate={this.getResultDateIsSelect}
                             isSelect
                             whenClickDate={this.whenClickDate}
@@ -89,8 +81,8 @@ class Module extends Component {
                 <div className="col-md-12">
                     <div className="reactCalendar">
                         <h2>Style: dafault</h2>
-                        <CalendarMobile startDate="2018/02/12"
-                            endDate="2018/02/25"
+                        <CalendarMobile startDate={moment().format('YYYY/MM/DD')}
+                            endDate="2018/06/25"
                             getResultDate={this.getResultDateDafault}
                             ref={(el) => this.myFuckChildren = el}
                         />
@@ -99,7 +91,7 @@ class Module extends Component {
                 <div className="col-md-12">
                     <div className="reactCalendar">
                         <h2>Style: dafault</h2>
-                        <CalendarMobile startDate="2018/03/12"
+                        <CalendarMobile startDate={moment().format('YYYY/MM/DD')}
                             endDate="2018/06/08"
                             getResultDate={this.getResultDateDafault}
                         />

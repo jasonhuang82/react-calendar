@@ -25,9 +25,6 @@ export default class CalendarMobile extends React.Component {
         startDate: '1991/01/01',
         endDate: '1993/01/01',
         isSelect: false,
-        getResultDate () {
-            console.log('getResultDate');
-        },
         whenClickDate () { // click 日期時的callback
             console.log('whenClickDate');
         },
@@ -77,8 +74,6 @@ export default class CalendarMobile extends React.Component {
         // 會去接收 setState過來的 props or State 存在參數裡，也就是若是需要使用剛剛setState來的資料就需要用參數接過來
         // 只有使用this.state.xx 會只抓到當下未更新的state
         console.log('componentWillUpdate CalendarMobile');
-        // 取得日期結果給props
-        this.getResultDate();
         // 接收管理所有的callback function 不然寫在 setState 前面可能會抓到就得值
         console.log('calendarState!!!!', nextState.calendarState);
     }
