@@ -37,6 +37,8 @@
     "node-sass": "^4.7.2",
     "proptypes": "^1.1.0",
     "react-css-modules": "^4.7.1",
+    "react-dom": "^15.6.2",
+    "redux": "^3.7.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "transform-runtime": "0.0.0",
