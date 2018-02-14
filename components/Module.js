@@ -49,15 +49,8 @@ class Module extends Component {
     constructor (props) {
         // super是呼叫上層父類別的建構式
         super(props);
-        this.state = {
-            calendarData: [],
-            selectState: 'go',
-            calendarState: {
-                'selectState': 'go',
-                'startDate': null, // label 上的文字
-                'backDate': null // label 上的文字
-            },
-        };
+        this.store = (new CalendarMobileAction()).store;
+        this.state = this.store.getState();
         this.calendarTitle = [
             {
                 titleName: '日',
@@ -101,7 +94,12 @@ class Module extends Component {
         // 將start Date 之前以及 endDate 之後的日期全 disable
         // 鎖住起始日前與結束日後前的日期
         calendarList = this.lockDefaultStartBeforeAndEndAfterDate(calendarList);
-        this.setState({ calendarData: calendarList });
+
+        this.store.dispatch({
+            type: 'updateCalendarData',
+            calendarData: calendarList
+        });
+        this.setState(this.store.getState());
         // DataLoader.getDaysInMonth(this.props.startDate);
         // DataLoader.getDaysInMonthPushGap(this.props.startDate);
         // // js 月份從 0 開始算 0-11 12== 下一年一月
@@ -112,7 +110,6 @@ class Module extends Component {
         // 只有使用this.state.xx 會只抓到當下未更新的state
         console.log('componentWillUpdate CalendarMobile');
         // 接收管理所有的callback function 不然寫在 setState 前面可能會抓到就得值
-        console.log('calendarState!!!!', nextState.calendarState);
     }
 
     // 綁訂所有方法 .bind(this)
@@ -202,8 +199,6 @@ class Module extends Component {
         }
         // null 比較!! === undefined
         if (isNeedReRender && !!calendarState.selectState && cloneCalendarList) {
-            console.log('selectState', calendarState.selectState);
-            console.log('backDate', calendarState.backDate);
             this.props.whenClickDate();
             this.updateCalendarState(cloneCalendarList, calendarState);
         }
@@ -232,10 +227,12 @@ class Module extends Component {
                 'backDate': calendarStateObj.backDate || this.state.calendarState.backDate || null
             };
 
-            this.setState({
-                'calendarState': calendarState,
-                'calendarData': cloneCalendarList
+            this.store.dispatch({
+                type: 'updateCalendarState',
+                calendarState: calendarState,
+                calendarData: cloneCalendarList
             });
+            this.setState(this.store.getState());
         }
     }
 
@@ -393,15 +390,15 @@ class Module extends Component {
                     });
                 }
                 // 修改 calendarState.selectState資料
-                this.setState({
-                    // selectState: selectState,
+                this.store.dispatch({
+                    type: 'setSelectLabelState',
                     calendarState: {
-                        'selectState': selectState,
-                        'startDate': this.state.calendarState.startDate, // label 上的文字
-                        'backDate': this.state.calendarState.backDate // label 上的文字
+                        'selectState': selectState
                     },
                     calendarData: cloneCalendarList
                 });
+
+                this.setState(this.store.getState());
             }
         }
         else {
