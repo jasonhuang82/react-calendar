@@ -14,6 +14,7 @@ import DataLoader from './DataLoader';
 import CalendarTitle from './CalendarTitle';
 import CalendarLabel from './CalendarLabel';
 import CalendarMobileBodyContainer from './CalendarMobileBodyContainer';
+import CalendarMobileAction from '../Action/CalendarMobileAction';
 
 class Module extends Component {
     static defaultProps = {
@@ -235,7 +236,6 @@ class Module extends Component {
                 'calendarState': calendarState,
                 'calendarData': cloneCalendarList
             });
-            // this.setState({ 'calendarState': calendarState });
         }
     }
 

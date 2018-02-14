@@ -11,6 +11,8 @@ import CalendarMobile from './index.js';
 
 // Redux 範例
 import ReduxTest from './components/ReduxTest';
+import ReduxList from './components/ReduxList';
+import ReduxSwitch from './components/ReduxSwitch';
 
 // 用於總結所有
 class Demo extends Component {
@@ -21,23 +23,34 @@ class Demo extends Component {
     static propTypes = {
         prop: PropTypes.string.isRequired
     };
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
-            statename: 'state'
+            reduxSwitchState: ''
         };
-        this.myFuckChildren = '';
+        this.calendarIsSelect = '';
     }
 
     whenClickDate = () => {
         console.log('我是從Module來的喔');
     }
 
-    render () {
+    render() {
         return (
             <div className="row">
                 <div className="col-md-24">
-                    <h2>Redux 範例</h2>
+                    <h2>ReduxSwitch 範例</h2>
+                    <ReduxSwitch ref={(el) => { this.reduxSwitchState = el }} 
+                        reduxSwitchState={(res) => { this.setState({ reduxSwitchState: res}) }}
+                    />
+                    <h3>{this.state.reduxSwitchState?'YES':'NO'}</h3>
+                </div>
+                <div className="col-md-24">
+                    <h2>ReduxList範例</h2>
+                    <ReduxList />
+                </div>
+                <div className="col-md-24">
+                    <h2>Redux 文字範例</h2>
                     <ReduxTest />
                 </div>
                 <div className="col-md-12">
@@ -48,7 +61,7 @@ class Demo extends Component {
                             getResultDate={this.getResultDateIsSelect}
                             isSelect
                             whenClickDate={this.whenClickDate}
-                            ref={(el) => this.myFuckChildren = el}
+                            ref={(el) => this.calendarIsSelect = el}
                         />
                     </div>
                 </div>
@@ -58,7 +71,6 @@ class Demo extends Component {
                         <CalendarMobile startDate={moment().format('YYYY/MM/DD')}
                             endDate="2018/06/25"
                             getResultDate={this.getResultDateDafault}
-                            ref={(el) => this.myFuckChildren = el}
                         />
                     </div>
                 </div>
