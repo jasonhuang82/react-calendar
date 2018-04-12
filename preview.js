@@ -56,7 +56,8 @@ class Demo extends Component {
                 <div className="col-md-12">
                     <div className="reactCalendar">
                         <h2>Style: isSelect</h2>
-                        <CalendarMobile startDate={moment().format('YYYY/MM/DD')}
+                        <CalendarMobile 
+                            startDate={moment().format('YYYY/MM/DD')}
                             endDate="2018/06/08"
                             getResultDate={this.getResultDateIsSelect}
                             isSelect
@@ -69,7 +70,7 @@ class Demo extends Component {
                     <div className="reactCalendar">
                         <h2>Style: dafault</h2>
                         <CalendarMobile startDate={moment().format('YYYY/MM/DD')}
-                            endDate="2018/06/25"
+                            endDate="2019/01/25"
                             getResultDate={this.getResultDateDafault}
                         />
                     </div>

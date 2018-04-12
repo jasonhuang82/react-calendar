@@ -441,8 +441,7 @@ class Module extends Component {
                     calendarData={this.state.calendarData}
                     setTdDayClass={this.getCalendarMobileBodyTdDayClass}
                     dateClickFunc={this.dateClick}
-                />
-                
+                />    
             </div>
         );
     }
