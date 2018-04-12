@@ -40,26 +40,30 @@ export default class DataLoader {
             maxMon = moment(maxMon).format('YYYY/MM/DD');
             // 計算相差 明天render start to end
             let totalDateArr = [];
-            let diffMonths = 0;
-
-            // 日期相差預設會少一要+1抵銷回來，如果開始日期大於結束日期那相差會再少一個月要再加一去抵銷所以這情狀會+2
-            if (moment(minMon).date() > moment(maxMon).date()) {
-                diffMonths = DataLoader.countDiffMonth(minMon, maxMon) + 2;
+            // 日期月份相差預設會少1要+1抵銷回來
+            let diffMonths = DataLoader.countDiffMonth(minMon, maxMon);
+            // 如果開始月份加上相差月份還小於結束月份就會將相差月份補齊與結束月份一樣
+            if (moment(minMon).add(diffMonths, 'months').month() < moment(maxMon).month()) {
+                diffMonths++;
             }
-            else {
-                diffMonths = DataLoader.countDiffMonth(minMon, maxMon) + 1;
-            }
-
+            // 用起始月份加上相差月份 === 要render結束的月份
+            let endMon = parseInt(moment(minMon).month()) + parseInt(diffMonths);
             // 產出所有需要印出的日曆標頭，並同時決定要印幾個
-            for (let startMon = parseInt(moment(minMon).month()); startMon <= diffMonths; startMon++) {
-                // console.log(moment(minMon).year() + '/' + DataLoader.autoFillZero(startMon) );
+            for (let startMon = parseInt(moment(minMon).month()); startMon <= endMon; startMon++) {    
                 let monthStr = new Date(moment(minMon).year(), DataLoader.autoFillZero(startMon)).toISOString();
                 let dateStr = moment(monthStr).format('YYYY/MM');
-                // debug mode
-                // console.log(`${startMon}月:`, moment(monthStr).format('YYYY/MM'));
                 totalDateArr.push(dateStr);
+                // debug mode
+                // console.log(moment(minMon).year() + '/' + DataLoader.autoFillZero(startMon) );
+                // console.log(`${startMon + 1}月:`, moment(monthStr).format('YYYY/MM'));
             }
             // debug mode
+            console.log('起始到結束月', parseInt(moment(minMon).month()) + parseInt(diffMonths));
+            console.log('開啟日期', minMon);
+            console.log('相差月份', diffMonths);
+            console.log('開啟日期加相差日期',moment(minMon).add(diffMonths, 'months').format('YYYY/MM/DD'));
+            console.log('結束日期',maxMon);
+            console.log('起加上差比結束早?', moment(minMon).add(diffMonths, 'months').isBefore(moment(maxMon)));
             // console.log('總共年月數', totalDateArr);
             return totalDateArr;
         }
